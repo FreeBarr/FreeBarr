@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenPOS - Point of Sale</title>
+    <!-- Flask Static Link for CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <div class="nav-container">
+                <div class="nav-tabs">
+                    <button id="tab-pedidos" class="nav-btn active">POS / Order</button>
+                    <button id="tab-caja" class="nav-btn">Cashier / Manager</button>
+                </div>
+                <a href="/logout" class="logout-link">Logout</a>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <!-- POS VIEW -->
+            <div id="vista-pedidos">
+                <div class="pos-layout">
+                    <!-- Product Selection (Left/Top) -->
+                    <div class="product-section">
+                        <header class="section-header">
+                            <h1>OpenPOS</h1>
+                            <div class="search-container">
+                                <input type="search" id="barra-busqueda" placeholder="Search product..." class="search-input">
+                                <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            </div>
+                            <div id="menu-nav" class="mt-4"></div>
+                            <p id="menu-instruction" class="text-muted mt-4">Select a category to begin.</p>
+                        </header>
+                        <div id="menu-container" class="mt-4"></div>
+                    </div>
+
+                    <!-- Order Sidebar (Right/Bottom) -->
+                    <div id="panel-pedido" class="order-sidebar">
+                        <div id="tirador-panel" class="sidebar-header">
+                            <div class="drag-handle"></div>
+                            <h2 class="sidebar-title">Current Order</h2>
+                        </div>
+                        <div class="sidebar-content">
+                            <div class="mb-4">
+                                <label for="table-number" class="form-label">Table No. / Order ID</label>
+                                <input type="text" id="table-number" class="form-input" placeholder="e.g., 12">
+                            </div>
+                            
+                            <div id="order-list" class="order-list">
+                                <p class="text-center mt-4 text-muted">No items added.</p>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <label for="general-comments" class="form-label">Comments</label>
+                                <textarea id="general-comments" rows="2" class="form-input" placeholder="e.g., allergies..."></textarea>
+                            </div>
+                            
+                            <div class="total-section">
+                                <span>Total:</span>
+                                <span id="total-price">0.00</span>
+                            </div>
+                            
+                            <div class="action-buttons">
+                                <button id="clear-order-btn" class="btn btn-danger">Clear</button>
+                                <button id="submit-order-btn" class="btn btn-primary">Submit Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CASHIER VIEW -->
+            <div id="vista-caja" class="hidden">
+                <div class="cashier-container">
+                    <header>
+                        <h1 class="section-header">Cashier Management</h1>
+                        <div id="caja-nav" class="cashier-nav">
+                            <button id="subtab-mesas" class="cashier-tab active">Active Tables</button>
+                            <button id="subtab-historial" class="cashier-tab">History</button>
+                            <button id="subtab-inventario" class="cashier-tab">Inventory / Menu</button>
+                        </div>
+                    </header>
+                    
+                    <!-- Active Tables Subview -->
+                    <div id="caja-mesas-y-detalles">
+                        <div class="split-view">
+                            <div class="panel panel-left">
+                                <h2 class="panel-title">Active Orders</h2>
+                                <div id="lista-mesas">
+                                    <p class="text-muted">No active orders.</p>
+                                </div>
+                            </div>
+                            <div class="panel panel-right">
+                                <h2 class="panel-title">Order Details</h2>
+                                <div id="detalles-pedido" class="text-muted">
+                                    <p>Select a table or order to view details.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="gestion-caja-container" class="mt-4"></div>
+                    </div>
+
+                    <!-- History Subview (FIXED: Split View added) -->
+                    <div id="caja-historial" class="hidden">
+                        <div class="split-view">
+                            <div class="panel panel-left">
+                                <h2 class="panel-title">Session History</h2>
+                                <div id="lista-pedidos-cerrados" style="max-height: 400px; overflow-y: auto;">
+                                    <p class="text-muted">No closed orders.</p>
+                                </div>
+                            </div>
+                            <div class="panel panel-right">
+                                <h2 class="panel-title">History Details</h2>
+                                <div id="detalles-historial" class="text-muted">
+                                    <p>Select an order to view details and actions.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Inventory Subview -->
+                    <div id="caja-inventario" class="hidden">
+                        <h2 class="panel-title">Menu Management</h2>
+                        <button id="btn-abrir-añadir-producto" class="btn btn-primary mb-4">
+                            + Add New Product
+                        </button>
+                        
+                        <div class="search-container mb-4">
+                            <input type="search" id="inventario-busqueda" placeholder="Search inventory..." class="search-input">
+                        </div>
+                        
+                        <div id="lista-inventario" class="panel" style="display: flex; flex-direction: column; gap: 1rem;">
+                            <p class="text-muted">Loading inventory...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODALS -->
+    <div id="message-modal" class="modal-overlay hidden">
+        <div class="modal-box text-center">
+            <p id="modal-text" class="text-xl mb-6"></p>
+            <button id="modal-close-btn" class="btn btn-primary">OK</button>
+        </div>
+    </div>
+
+    <div id="confirm-modal" class="modal-overlay hidden">
+        <div class="modal-box">
+            <h3 class="modal-title">Confirm Action</h3>
+            <p id="confirm-text" class="text-muted mb-6"></p>
+            <div class="modal-actions">
+                <button id="confirm-cancel-btn" class="btn btn-secondary">Cancel</button>
+                <button id="confirm-ok-btn" class="btn btn-danger">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="item-comment-modal" class="modal-overlay hidden">
+        <div class="modal-box">
+            <h3 class="modal-title" id="item-comment-title">Add Comment</h3>
+            <textarea id="item-comment-input" rows="3" class="form-input" placeholder="e.g., extra sauce..."></textarea>
+            <div class="modal-actions">
+                <button id="item-comment-cancel-btn" class="btn btn-secondary">Cancel</button>
+                <button id="item-comment-save-btn" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="print-confirm-modal" class="modal-overlay hidden">
+        <div class="modal-box text-center">
+            <h3 class="modal-title">Print Kitchen Ticket?</h3>
+            <p class="text-muted mb-6">Send this order to the kitchen printer?</p>
+            <div class="modal-actions center">
+                <button id="print-no-btn" class="btn btn-danger">No 🚫</button>
+                <button id="print-yes-btn" class="btn btn-success">Yes 🖨️</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="payment-method-modal" class="modal-overlay hidden">
+        <div class="modal-box">
+            <h3 class="modal-title">Select Payment Method</h3>
+            <div class="category-grid"> <!-- reusing grid -->
+                <button id="pay-cash-btn" class="btn" style="background-color: #dcfce7; color: #166534; padding: 2rem;">
+                    Cash 💵
+                </button>
+                <button id="pay-card-btn" class="btn" style="background-color: #dbeafe; color: #1e40af; padding: 2rem;">
+                    Card 💳
+                </button>
+            </div>
+             <div class="text-center mt-4">
+                <button id="payment-cancel-btn" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-producto-form" class="modal-overlay hidden">
+        <div class="modal-box">
+            <h3 class="modal-title" id="producto-modal-title">Add Product</h3>
+            <form id="producto-form">
+                <input type="hidden" id="producto-id" name="id">
+                <div class="mb-4">
+                    <label class="form-label" for="producto-nombre">Name</label>
+                    <input class="form-input" id="producto-nombre" name="name" type="text" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label" for="producto-precio">Price</label>
+                    <input class="form-input" id="producto-precio" name="price" type="number" step="0.01" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label" for="producto-categoria">Category</label>
+                    <select class="form-input" id="producto-categoria" name="category" required>
+                        <option value="food">Food</option>
+                        <option value="drink">Drink</option>
+                        <option value="dessert">Dessert</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="btn-cancelar-producto" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" id="btn-guardar-producto" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <!-- Flask Static Link for JS -->
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+</body>
+</html>

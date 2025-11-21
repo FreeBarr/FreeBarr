@@ -1,0 +1,22 @@
+/backup.bat
+/que hacer en el ordenador de chari para guardar automaticamante.txt
+# --- OS & Editor Junk ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
+
+# --- Security (VERY IMPORTANT) ---
+.env
+config.js
+secrets.json
+
+# --- Dependencies (Add if you have them) ---
+node_modules/
+dist/
+build/
+__pycache__/
+*.pyc
+venv/
+env/
