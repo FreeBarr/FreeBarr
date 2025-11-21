@@ -226,7 +226,7 @@ def format_customer_receipt(order):
     date_formatted = date_obj.strftime('%d/%m/%Y %H:%M')
     
     ticket = [
-        "\n  *** OPEN POS SYSTEM ***", 
+        "\n  *** FreeBarr ***", 
         "    Thank you for your visit",
         f"\n123 Generic Street, City",
         f"\n\nTax ID: 00000000", 
@@ -549,7 +549,7 @@ if __name__ == '__main__':
             db.commit()
         rebuild_summary_from_db()
     
-    print("--- OpenPOS Server ---\n")
+    print("--- FreeBarr Server ---\n")
     print(f"Current Summary: {current_summary['total_grand']:.2f}")
     print(f"Open your browser at: http://127.0.0.1:5000")
     socketio.run(app, host='0.0.0.0', port=5000, debug=False)

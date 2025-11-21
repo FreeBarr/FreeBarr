@@ -1,10 +1,10 @@
 @echo off
-title Server Launcher - OpenPOS
+title Server Launcher - FreeBarr
 
 cls
 echo.
 echo   ==================================================
-echo    STARTING OPENPOS SERVER - NEW SESSION
+echo    STARTING FREEBARR SERVER - NEW SESSION
 echo   ==================================================
 echo.
 echo   This window monitors the server.
@@ -14,7 +14,7 @@ echo   Database orders will be cleared for the new day...
 echo.
 
 REM First time start without arguments. cmd /k keeps window open on error.
-start "OpenPOS Server" /WAIT cmd /k python app.py
+start "FreeBarr Server" /WAIT cmd /k python app.py
 
 :restart_loop
 cls
@@ -37,7 +37,7 @@ if /i "%restart_choice%"=="y" (
     echo   Existing data will NOT be deleted...
     echo.
     REM Restart with --no-reset argument
-    start "OpenPOS Server (Restarted)" /WAIT cmd /k python app.py --no-reset
+    start "FreeBarr Server (Restarted)" /WAIT cmd /k python app.py --no-reset
     goto restart_loop
 ) else if /i "%restart_choice%"=="n" (
     echo.
