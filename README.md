@@ -57,13 +57,19 @@ FreeBarr utilizes an embedded **SQLite database** and runs locally, making it an
     ```bash
     python app.py
     ```
-    *To keep previous data, run: `python app.py --no-reset`*
+    *To keep previous data, run: `python app.py --no-reset`* (This will be fixed)
+    
+    ### 🖨️ Receipt Printing (Windows only, for now)
+    Currently, receipt printing is supported on Windows only. Linux support is planned for future updates.
+    To enable physical receipt printing on Windows, you must install the optional `pywin32` library:
+    ```bash
+    pip install pywin32
 
-3.  **Accessing the POS:**
+4.  **Accessing the POS:**
     * **On the same computer:** Open `http://127.0.0.1:5000`
     * **On Mobile / Tablet / Appilix:**
-        1.  Find your computer's local IP address (e.g., run `ipconfig` on Windows or `ifconfig` on Mac/Linux).
-        2.  On your phone, browse to `http://YOUR_IP_ADDRESS:5000` (example: `http://192.168.1.35:5000`).
+        1.  Find your host's local IP address (e.g., run `ipconfig` on Windows or `ifconfig` on Mac/Linux).
+        2.  On your phone, browse to `http://YOUR_HOSTS_IP_ADDRESS:5000` (example: `http://192.168.1.35:5000`).
 
 ## 📱 Turn it into an App (Android)
 FreeBarr is optimized for mobile views. To use it like a native app:
