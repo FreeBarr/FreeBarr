@@ -10,6 +10,9 @@ FreeBarr utilizes an embedded **SQLite database** and runs locally, making it an
 ![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
 ![Status](https://img.shields.io/badge/status-active-success.svg)
 
+
+![FreeBarr logo](freebarrlogo.png)
+
 ## Core Features & Functionality
 
 ### Real-Time Order Management
