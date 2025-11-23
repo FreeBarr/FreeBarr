@@ -11,7 +11,7 @@ FreeBarr utilizes an embedded **SQLite database** and runs locally, making it an
 ![Status](https://img.shields.io/badge/status-active-success.svg)
 
 
-![FreeBarr logo](fblogohd.png)
+![FreeBarr logo](fblogohdnw.png)
 
 ## Core Features & Functionality
 
