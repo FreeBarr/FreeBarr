@@ -1,24 +1,31 @@
-import sqlite3
-import json
 import os
 import sys
-from flask import Flask, render_template, g, request, redirect, url_for, session
-from flask_socketio import SocketIO
-from datetime import datetime
-
+import sqlite3
+import json
 # --- Windows Printing Module ---
 try:
     import win32print
     WINDOWS_PRINTING_ENABLED = True
 except ImportError:
     WINDOWS_PRINTING_ENABLED = False
-    print("!!! WARNING: 'pywin32' module not found. Printing functionality will be disabled.")
+    print("!!! WARNING: 'pywin32' module not found. Printing disabled.")
+from flask import Flask, render_template, g, request, redirect, url_for, session
+from flask_socketio import SocketIO
+from datetime import datetime
+from dotenv import load_dotenv  # pip install python-dotenv
+
+# Load environment variables from a .env file
+load_dotenv()
 
 # --- CONFIGURATION ---
-PRINTER_NAME = os.environ.get('PRINTER_NAME', 'POS-80C')
+PRINTER_NAME = os.getenv('PRINTER_NAME', 'POS-80C')
 DATABASE = 'pos.db'
-APP_PASSWORD = os.environ.get('APP_PASSWORD', 'admin123') # Default generic password
-SECRET_KEY_APP = os.environ.get('SECRET_KEY_APP', 'replace_this_secret_key')
+# Default to a strong random string if not set, prompting the user to configure it
+APP_PASSWORD = os.getenv('APP_PASSWORD') 
+SECRET_KEY_APP = os.getenv('SECRET_KEY_APP', os.urandom(24).hex())
+
+if not APP_PASSWORD:
+    print("!!! WARNING: APP_PASSWORD is not set in .env. Login will fail.")
 
 # --- CONSTANTS ---
 ORDER_STATUS_ACTIVE = 'active'
@@ -57,10 +64,9 @@ def close_connection(exception):
     if db is not None:
         db.close()
 
-def init_db():
+def init_db(reset=False):
     """
     Creates orders and menu_items tables.
-    Clears orders table on startup.
     Inserts initial generic menu only if menu_items table is empty.
     """
     with app.app_context():
@@ -79,8 +85,6 @@ def init_db():
                 payment_method TEXT 
             )
         ''')
-        # Clear active/paid orders on session start
-        cursor.execute('DELETE FROM orders')
         
         # 2. Menu Items Table
         cursor.execute('''
@@ -92,6 +96,8 @@ def init_db():
                 UNIQUE(name)
             )
         ''')
+
+
         
         # --- INITIAL DATA INSERTION ---
         item_count = cursor.execute('SELECT COUNT(*) FROM menu_items').fetchone()[0]
@@ -135,6 +141,13 @@ def init_db():
             print("Database initialized: 'orders' table created and 'menu_items' populated.")
         else:
             print(">>> Existing menu preserved.")
+
+        if reset:
+            print(">>> STARTING NEW DAY: Cleaning active and closed orders...")
+            cursor.execute('DELETE FROM orders')
+        else:
+            print(">>> RESUMING SESSION: Existing orders preserved.")
+            
         
         db.commit()
 
@@ -527,29 +540,19 @@ def void_order(data):
 
 
 if __name__ == '__main__':
-    no_reset_flag = '--no-reset' in sys.argv
+    # Check for the specific flag to clear data
+    reset_mode = '--new-day' in sys.argv
+    
+    # Initialize DB (Clears only if reset_mode is True)
+    init_db(reset=reset_mode)
 
-    if not no_reset_flag:
-        print(">>> START MODE: Database will be cleared for a new session.")
-        init_db()
-    else:
-        print(">>> RESTART MODE: Database preserved.")
-        with app.app_context():
-            db = get_db()
-            cursor = db.cursor()
-            cursor.execute('''
-                CREATE TABLE IF NOT EXISTS menu_items (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    name TEXT NOT NULL,
-                    price REAL NOT NULL,
-                    category TEXT NOT NULL,
-                    UNIQUE(name)
-                )
-            ''')
-            db.commit()
+    # If we are RESUMING (not resetting), restore the cash summary
+    if not reset_mode:
         rebuild_summary_from_db()
     
-    print("--- FreeBarr Server ---\n")
+    print("--- FreeBarr Server ---")
     print(f"Current Summary: {current_summary['total_grand']:.2f}")
     print(f"Open your browser at: http://127.0.0.1:5000")
+    
+    # allow 0.0.0.0 for local network access
     socketio.run(app, host='0.0.0.0', port=5000, debug=False)
