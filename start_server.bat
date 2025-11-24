@@ -10,7 +10,6 @@ echo.
 echo   This window monitors the server.
 echo   The actual server process will run in a new window.
 echo.
-echo   Database orders will be cleared for the new day...
 echo.
 
 REM First time start without arguments. cmd /k keeps window open on error.
