@@ -52,7 +52,7 @@ FreeBarr utilizes an embedded **SQLite database** and runs locally, making it an
     ```bash
     git clone [https://github.com/FreeBarr/FreeBarr.git](https://github.com/FreeBarr/FreeBarr.git)
     cd FreeBarr
-    pip install -r requirements.txt
+    pip install -r windows_requirements.txt
     ```
     Note: To run the pip command to install the required modules, you must first install Python from python.org or:
     ```bash
