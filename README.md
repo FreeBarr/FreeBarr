@@ -106,6 +106,14 @@ Contributions, bug reports, and feature requests are welcome. Please fork the re
 
 ---
 
+---
+
+## 📧 Contact
+
+Any questions, suggestions, critiques and praise! Write an email to **freebarrcontact@gmail.com**
+
+---
+
 ## 📄 License
 
 Distributed under the MIT License.
