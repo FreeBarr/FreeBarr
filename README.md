@@ -57,6 +57,12 @@ FreeBarr utilizes an embedded **SQLite database** and runs locally, making it an
     Note: To run the pip command to install the required modules, you must first install Python from python.org or:
     ```bash
     curl -o python_installer.exe https://www.python.org/ftp/python/3.14.0/python-3.14.0-amd64.exe
+    ```
+    Then install pip:
+    ```bash
+    https://bootstrap.pypa.io/get-pip.py
+    python get-pip.py
+    ```
 
 3.  **Run the Server:**
     To start the POS (note: by default, this resets the database for a fresh shift):
