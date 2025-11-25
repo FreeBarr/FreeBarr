@@ -64,6 +64,7 @@ FreeBarr utilizes an embedded **SQLite database** and runs locally, making it an
     python-installer.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0
     ```
     This will install Python 3.14.0 in the background.
+
     Note: If installing on Windows 7, 3.8.10 is the last python version to support Windows 7;
 
     **⚠️ Password and Secret Key**
