@@ -63,6 +63,7 @@ FreeBarr utilizes an embedded **SQLite database** and runs locally, making it an
     Note: If installing on Windows 7, 3.8.10 is the last python version to support Windows 7;
 
     **⚠️ Password and Secret Key**
+    
     Before starting the server, it is important to seta *Password* and *Secret Key* in the **.env** file. Without it, you wont be able to log in to the POS interface.
     If this is not done, a warning will be displayed when initiating the server.
 
