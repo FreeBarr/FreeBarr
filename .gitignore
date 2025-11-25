@@ -8,6 +8,7 @@ Thumbs.db
 *.log
 
 # --- Security (VERY IMPORTANT) ---
+.env
 config.js
 secrets.json
 
@@ -18,3 +19,4 @@ build/
 __pycache__/
 *.pyc
 venv/
+env/
