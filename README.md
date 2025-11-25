@@ -13,6 +13,8 @@ FreeBarr utilizes an embedded **SQLite database** and runs locally, making it an
 
 ![FreeBarr logo](fblogohdnw.jpg)
 
+---
+
 ## Core Features & Functionality
 
 ### Real-Time Order Management
@@ -43,6 +45,8 @@ FreeBarr utilizes an embedded **SQLite database** and runs locally, making it an
 | **Real-Time** | Flask-SocketIO | Handles WebSocket connections for instantaneous data sync. |
 | **Frontend** | HTML5, CSS3, JavaScript | Provides a responsive, locally-served web interface. |
 | **Printing** | `pywin32` | Windows-specific module for raw thermal printing integration. |
+
+---
 
 ## 🚀 Getting Started
 
@@ -82,6 +86,8 @@ FreeBarr utilizes an embedded **SQLite database** and runs locally, making it an
     * **On Mobile / Tablet / Appilix:**
         1.  Find your host's local IP address (e.g., run `ipconfig` on Windows or `ifconfig` on Mac/Linux).
         2.  On your phone, browse to `http://YOUR_HOSTS_IP_ADDRESS:5000` (example: `http://192.168.1.35:5000`).
+     
+---
 
 ## 📱 Turn it into an App (Android)
 FreeBarr is optimized for mobile views. To use it like a native app:
@@ -106,7 +112,6 @@ Contributions, bug reports, and feature requests are welcome. Please fork the re
 
 ---
 
----
 
 ## 📧 Contact
 
