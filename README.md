@@ -13,6 +13,8 @@ FreeBarr utilizes an embedded **SQLite database** and runs locally, making it an
 
 ![FreeBarr logo](fblogohdnw.jpg)
 
+---
+
 ## Core Features & Functionality
 
 ### Real-Time Order Management
@@ -44,6 +46,8 @@ FreeBarr utilizes an embedded **SQLite database** and runs locally, making it an
 | **Frontend** | HTML5, CSS3, JavaScript | Provides a responsive, locally-served web interface. |
 | **Printing** | `pywin32` | Windows-specific module for raw thermal printing integration. |
 
+---
+
 ## 🚀 Getting Started
 
 ## Installation & Usage
@@ -60,6 +64,7 @@ FreeBarr utilizes an embedded **SQLite database** and runs locally, making it an
     python-installer.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0
     ```
     This will install Python 3.14.0 in the background.
+
     Note: If installing on Windows 7, 3.8.10 is the last python version to support Windows 7;
 
     **⚠️ Password and Secret Key**
@@ -82,6 +87,8 @@ FreeBarr utilizes an embedded **SQLite database** and runs locally, making it an
     * **On Mobile / Tablet / Appilix:**
         1.  Find your host's local IP address (e.g., run `ipconfig` on Windows or `ifconfig` on Mac/Linux).
         2.  On your phone, browse to `http://YOUR_HOSTS_IP_ADDRESS:5000` (example: `http://192.168.1.35:5000`).
+     
+---
 
 ## 📱 Turn it into an App (Android)
 FreeBarr is optimized for mobile views. To use it like a native app:
@@ -103,6 +110,13 @@ As a student currently learning full-stack development, this project was largely
 ## 🤝 Contributing
 
 Contributions, bug reports, and feature requests are welcome. Please fork the repository and open a pull request.
+
+---
+
+
+## 📧 Contact
+
+Any questions, suggestions, critiques and maybe praise? Write an email to **freebarrcontact@gmail.com**
 
 ---
 
