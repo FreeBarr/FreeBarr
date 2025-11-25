@@ -99,10 +99,3 @@ body {
 .btn-submit:hover {
     background-color: var(--primary-hover);
 }
-
-.default-pass-hint {
-    text-align: center;
-    font-size: 0.75rem;
-    color: #9ca3af;
-    margin-top: 1rem;
-}
