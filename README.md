@@ -48,39 +48,35 @@ FreeBarr utilizes an embedded **SQLite database** and runs locally, making it an
 
 ## Installation & Usage
 
-1.  **Clone and Install:**
-    ```bash
+1.  **Clone, Install and Setup:**
+    ```
     git clone [https://github.com/FreeBarr/FreeBarr.git](https://github.com/FreeBarr/FreeBarr.git)
     cd FreeBarr
     pip install -r windows_requirements.txt
     ```
     To run the pip command to install the required modules, you must first install Python from [python.org](https://www.python.org/downloads/) or:
-    ```bash
+    ```
     curl -o python_installer.exe https://www.python.org/ftp/python/3.14.0/python-3.14.0-amd64.exe
     python-installer.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0
     ```
-    Note: If installing on Windows 7, 3.8.10 is the last verison of python to support Windows 7;
+    This will install Python 3.14.0 in the background.
+    Note: If installing on Windows 7, 3.8.10 is the last python version to support Windows 7;
+
+    **⚠️ Password and Secret Key**
+    Before starting the server, it is important to seta *Password* and *Secret Key* in the **.env** file. Without it, you wont be able to log in to the POS interface.
+    If this is not done, a warning will be displayed when initiating the server.
+
     
-    Then install pip:
-    ```bash
-    https://bootstrap.pypa.io/get-pip.py
-    python get-pip.py
-    ```
 
 3.  **Run the Server:**
-    To start the POS (note: by default, this resets the database for a fresh shift):
-    ```bash
-    python app.py
-    ```
-    *To keep previous data, run: `python app.py --no-reset`* (This will be fixed)
-    
-    ### 🖨️ Receipt Printing (Windows only, for now)
-    Currently, receipt printing is supported on Windows only. Linux support is planned for future updates.
-    To enable physical receipt printing on Windows, you must install the optional `pywin32` library:
-    ```bash
-    pip install pywin32
+    Make sure you have set a password and secret key in the .env file.
 
-4.  **Accessing the POS:**
+    Start the server by double clicking on either ```New_Day``` or ```Resume_Day``` .bat files
+    
+    **🖨️ Receipt Printing (Windows only, for now)**
+    Currently, receipt printing is supported on Windows only. Linux support is planned for future updates.
+
+5.  **Accessing the POS:**
     * **On the same computer:** Open `http://127.0.0.1:5000`
     * **On Mobile / Tablet / Appilix:**
         1.  Find your host's local IP address (e.g., run `ipconfig` on Windows or `ifconfig` on Mac/Linux).
