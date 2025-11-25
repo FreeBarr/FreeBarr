@@ -54,11 +54,13 @@ FreeBarr utilizes an embedded **SQLite database** and runs locally, making it an
     cd FreeBarr
     pip install -r windows_requirements.txt
     ```
-    Note: To run the pip command to install the required modules, you must first install Python from python.org or:
+    To run the pip command to install the required modules, you must first install Python from [python.org](https://www.python.org/downloads/) or:
     ```bash
     curl -o python_installer.exe https://www.python.org/ftp/python/3.14.0/python-3.14.0-amd64.exe
     python-installer.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0
     ```
+    Note: If installing on Windows 7, 3.8.10 is the last verison of python to support Windows 7;
+    
     Then install pip:
     ```bash
     https://bootstrap.pypa.io/get-pip.py
