@@ -562,5 +562,9 @@ if __name__ == '__main__':
     print(f"Current Summary: {current_summary['total_grand']:.2f}")
     print(f"Open your browser at: http://127.0.0.1:5000")
     
+    import threading
+    import webbrowser
+    threading.Timer(1.5, lambda: webbrowser.open("http://127.0.0.1:5000")).start()
+
     # allow 0.0.0.0 for local network access
     socketio.run(app, host='0.0.0.0', port=5000, debug=False)
