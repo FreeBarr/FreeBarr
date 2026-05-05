@@ -16,6 +16,14 @@ from dotenv import load_dotenv  # pip install python-dotenv
 
 # Load environment variables from a .env file
 load_dotenv()
+# Fix paths when running as a PyInstaller .exe
+if getattr(sys, 'frozen', False):
+    base_path = sys._MEIPASS
+else:
+    base_path = os.path.abspath(".")
+
+template_folder = os.path.join(base_path, 'templates')
+static_folder = os.path.join(base_path, 'static')
 
 # --- CONFIGURATION ---
 PRINTER_NAME = os.getenv('PRINTER_NAME', 'POS-80C')
@@ -37,7 +45,7 @@ PAYMENT_METHOD_CARD = 'card'
 CMD_PARTIAL_CUT = "\x1d\x56\x01" 
 
 # --- APP INITIALIZATION ---
-app = Flask(__name__)
+app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
 app.config['SECRET_KEY'] = SECRET_KEY_APP
 socketio = SocketIO(app)
 
