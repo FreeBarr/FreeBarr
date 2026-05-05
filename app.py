@@ -47,7 +47,7 @@ CMD_PARTIAL_CUT = "\x1d\x56\x01"
 # --- APP INITIALIZATION ---
 app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
 app.config['SECRET_KEY'] = SECRET_KEY_APP
-socketio = SocketIO(app)
+socketio = SocketIO(app, async_mode='threading')
 
 # --- MEMORY CASH SUMMARY ---
 current_summary = {

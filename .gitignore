@@ -14,8 +14,6 @@ secrets.json
 
 # --- Dependencies (Add if you have them) ---
 node_modules/
-dist/
-build/
 __pycache__/
 *.pyc
 venv/
