@@ -6,7 +6,7 @@ WORKDIR /app
 # Copy dependency files first (for layer caching)
 COPY windows_requirements.txt .
 
-# Install dependencies (excluding pywin32, which is Windows-only)
+# Install dependencies (Windows-only)
 RUN pip install --no-cache-dir \
     click \
     colorama \
@@ -21,7 +21,9 @@ RUN pip install --no-cache-dir \
     simple-websocket \
     Werkzeug \
     blinker \
+    pywin32 \
     python-dotenv
+    
 
 # Copy the entire project into the container
 COPY . .
